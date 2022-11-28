@@ -13,7 +13,7 @@ import { debounce } from '@mui/material'
 
 const LISTBOX_PADDING = 8 // px
 
-function renderRow (props) {
+function renderRow(props) {
   const { data, index, style } = props
   const dataSet = data[index]
   const inlineStyle = {
@@ -23,14 +23,14 @@ function renderRow (props) {
 
   if (dataSet.hasOwnProperty('group')) {
     return (
-      <ListSubheader key={dataSet.key} component='div' style={inlineStyle}>
+      <ListSubheader key={dataSet.key} component="div" style={inlineStyle}>
         {dataSet.group}
       </ListSubheader>
     )
   }
 
   return (
-    <Typography component='li' {...dataSet[0]} noWrap style={inlineStyle}>
+    <Typography component="li" {...dataSet[0]} noWrap style={inlineStyle}>
       {dataSet[1]}
     </Typography>
   )
@@ -43,7 +43,7 @@ const OuterElementType = React.forwardRef((props, ref) => {
   return <div ref={ref} {...props} {...outerProps} />
 })
 
-function useResetCache (data) {
+function useResetCache(data) {
   const ref = React.useRef(null)
   React.useEffect(() => {
     if (ref.current != null) {
@@ -54,13 +54,10 @@ function useResetCache (data) {
 }
 
 // Adapter for react-window
-const ListboxComponent = React.forwardRef(function ListboxComponent (
-  props,
-  ref
-) {
+const ListboxComponent = React.forwardRef(function ListboxComponent(props, ref) {
   const { children, ...other } = props
   const itemData = []
-  children.forEach(item => {
+  children.forEach((item) => {
     itemData.push(item)
     itemData.push(...(item.children || []))
   })
@@ -73,7 +70,7 @@ const ListboxComponent = React.forwardRef(function ListboxComponent (
   const itemCount = itemData.length
   const itemSize = smUp ? 36 : 48
 
-  const getChildSize = child => {
+  const getChildSize = (child) => {
     if (child.hasOwnProperty('group')) {
       return 48
     }
@@ -96,11 +93,11 @@ const ListboxComponent = React.forwardRef(function ListboxComponent (
         <VariableSizeList
           itemData={itemData}
           height={getHeight() + 2 * LISTBOX_PADDING}
-          width='100%'
+          width="100%"
           ref={gridRef}
           outerElementType={OuterElementType}
-          innerElementType='ul'
-          itemSize={index => getChildSize(itemData[index])}
+          innerElementType="ul"
+          itemSize={(index) => getChildSize(itemData[index])}
           overscanCount={5}
           itemCount={itemCount}
         >
@@ -121,13 +118,7 @@ const StyledPopper = styled(Popper)({
   }
 })
 
-export default function VirtualizedAutocomplete ({
-  label,
-  loading,
-  options,
-  onChange,
-  ...props
-}) {
+export default function VirtualizedAutocomplete({ label, loading, options, onChange, ...props }) {
   /*
   Kinda convoluted debounced search to fix performance issues
   */
@@ -135,7 +126,7 @@ export default function VirtualizedAutocomplete ({
   const [debouncing, setDebouncing] = useState(false)
 
   // Debounced search query
-  const acceptSearchQuery = useCallback(query => {
+  const acceptSearchQuery = useCallback((query) => {
     setSearchQuery(query ? query.trim() : '')
     setDebouncing(false)
   }, [])
@@ -153,7 +144,7 @@ export default function VirtualizedAutocomplete ({
 
   // Handle typing in the search field
   const handleSearchQueryChange = useCallback(
-    event => {
+    (event) => {
       const query = event.target.value
       setSearchQueryDebounced(query)
       setDebouncing(true)
@@ -183,19 +174,17 @@ export default function VirtualizedAutocomplete ({
   }, [options, searchQuery, debouncing])
 
   // We don't need Autocomplete to do any filtering or checking since we do it ourselves
-  const dummyFilter = useCallback(options => options, [])
+  const dummyFilter = useCallback((options) => options, [])
 
   // Do some memos to avoid rerenders
   const renderInputMemo = useCallback(
-    params => (
-      <TextField {...params} onChange={handleSearchQueryChange} label={label} />
-    ),
+    (params) => <TextField {...params} onChange={handleSearchQueryChange} label={label} />,
     [handleSearchQueryChange, label]
   )
 
   return (
     <Autocomplete
-      id='virtualize-demo'
+      id="virtualize-demo"
       sx={{ width: 300 }}
       filterOptions={dummyFilter}
       disableListWrap
@@ -203,7 +192,7 @@ export default function VirtualizedAutocomplete ({
       ListboxComponent={ListboxComponent}
       renderInput={renderInputMemo}
       renderOption={(props, option) => [props, option.label]}
-      renderGroup={params => params}
+      renderGroup={(params) => params}
       loading={debouncing || loading}
       options={filteredOptions}
       onChange={onChangeProxy}

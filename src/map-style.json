@@ -3,9 +3,9 @@
   "name": "rbb",
   "sources": {
     "bing": {
-			"type": "raster",
-			"tiles": [],
-			"tileSize": 256,
+      "type": "raster",
+      "tiles": [],
+      "tileSize": 256,
       "maxzoom": 19
     }
   },

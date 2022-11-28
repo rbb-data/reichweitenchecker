@@ -6,15 +6,7 @@ import { colorMapMain, colorMapAlt } from './colorMap'
 
 import styles from './HeatMap.module.scss'
 
-const WEEKDAYS = [
-  'Montag',
-  'Dienstag',
-  'Mittwoch',
-  'Donnerstag',
-  'Freitag',
-  'Samstag',
-  'Sonntag'
-]
+const WEEKDAYS = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']
 
 const HeatMap = ({ data, ...rest }) => {
   // data structure looks like this:
@@ -55,9 +47,7 @@ const HeatMap = ({ data, ...rest }) => {
                 style={{
                   backgroundColor:
                     value > 0
-                      ? colorMapMain(
-                          1 - (max === 1 ? 1 : (value - min1) / (max - min1))
-                        )
+                      ? colorMapMain(1 - (max === 1 ? 1 : (value - min1) / (max - min1)))
                       : '#f8f8f8'
                 }}
               >
@@ -71,8 +61,8 @@ const HeatMap = ({ data, ...rest }) => {
       ))}
       <div className={styles.hours}>
         {[0, 1, 2, 3, 4, 5, 6]
-          .map(hour => `${hour * 4}`)
-          .map(hour => (
+          .map((hour) => `${hour * 4}`)
+          .map((hour) => (
             <div key={`tick-${hour}`} className={styles.tick}>
               {hour}
             </div>

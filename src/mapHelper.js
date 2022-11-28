@@ -8,34 +8,34 @@ const short = {
 }
 
 function constructKeyValuePairs(dict) {
-  let s = '';
+  let s = ''
   for (let [key, value] of Object.entries(dict)) {
-    s += short[key] + ':' + value.slice(1) + ';';
+    s += short[key] + ':' + value.slice(1) + ';'
   }
 
   // remove trailing semicolon
   if (s) s = s.slice(0, -1)
 
-  return s;
+  return s
 }
 
 export function customMapStyleToQueryParam(customStyles) {
-  if (!customStyles.elements && !customStyles.settings) return null;
+  if (!customStyles.elements && !customStyles.settings) return null
 
-  let s = '';
+  let s = ''
 
   if (customStyles.elements) {
     for (let [key, value] of Object.entries(customStyles.elements)) {
-      s += '_' + short[key] + '|' + constructKeyValuePairs(value);
+      s += '_' + short[key] + '|' + constructKeyValuePairs(value)
     }
   }
 
   if (customStyles.settings) {
-    s += '_g|' + constructKeyValuePairs(customStyles.settings);
+    s += '_g|' + constructKeyValuePairs(customStyles.settings)
   }
 
   // remove first underscore
-  if (s) s = s.slice(1);
+  if (s) s = s.slice(1)
 
-  return 'st=' + s;
+  return 'st=' + s
 }

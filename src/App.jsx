@@ -32,18 +32,14 @@ const colorMapRouteTypes = {
   Bus: '#6a3d9a'
 }
 
-function fixedEncodeURIComponent (str) {
+function fixedEncodeURIComponent(str) {
   return encodeURIComponent(str).replace(
     /[!'()*]/g,
-    c =>
-      `%${c
-        .charCodeAt(0)
-        .toString(16)
-        .toUpperCase()}`
+    (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`
   )
 }
 
-function encodeFileName (fileName) {
+function encodeFileName(fileName) {
   return encodeURIComponent(
     //encodeURIComponent(fixedEncodeURIComponent(fileName))
     fixedEncodeURIComponent(fileName)
@@ -57,67 +53,45 @@ const startStopName = ['#faq', '#close'].includes(window.location.hash)
 const skeleton = (
   <div className={styles.skeleton}>
     {/* Switch */}
-    <Skeleton variant='rounded' height={30} sx={{ marginTop: '1rem' }} />
+    <Skeleton variant="rounded" height={30} sx={{ marginTop: '1rem' }} />
 
     {/* Station name */}
-    <Skeleton width='60%' sx={{ fontSize: '1.5rem', marginTop: '0.75rem' }} />
-    <Skeleton width='30%' />
+    <Skeleton width="60%" sx={{ fontSize: '1.5rem', marginTop: '0.75rem' }} />
+    <Skeleton width="30%" />
 
     {/* Station ranking */}
-    <Skeleton width='90%' sx={{ marginTop: '0.75rem' }} />
-    <Skeleton width='95%' />
-    <Skeleton width='85%' />
-    <Skeleton width='88%' />
-    <Skeleton variant='rounded' height={20} sx={{ marginTop: '0.75rem' }} />
-    <Skeleton
-      width='45%'
-      sx={{ display: 'inline-block', marginRight: '30%' }}
-    />
-    <Skeleton width='25%' sx={{ display: 'inline-block' }} />
+    <Skeleton width="90%" sx={{ marginTop: '0.75rem' }} />
+    <Skeleton width="95%" />
+    <Skeleton width="85%" />
+    <Skeleton width="88%" />
+    <Skeleton variant="rounded" height={20} sx={{ marginTop: '0.75rem' }} />
+    <Skeleton width="45%" sx={{ display: 'inline-block', marginRight: '30%' }} />
+    <Skeleton width="25%" sx={{ display: 'inline-block' }} />
 
     {/* Heatmap */}
-    <Skeleton width='65%' sx={{ fontSize: '1.5rem', marginTop: '0.75rem' }} />
+    <Skeleton width="65%" sx={{ fontSize: '1.5rem', marginTop: '0.75rem' }} />
     {[...Array(7)].map((_, i) => (
       <Skeleton
         key={i}
-        width='90%'
-        variant='rounded'
+        width="90%"
+        variant="rounded"
         height={20}
         sx={{ marginBottom: '5px', marginLeft: '10%' }}
       />
     ))}
 
     {/* Heatmap legend */}
-    <Skeleton
-      variant='rounded'
-      height={20}
-      sx={{ marginBottom: '5px', marginTop: '2rem' }}
-    />
-    <Skeleton
-      width='25%'
-      sx={{ display: 'inline-block', marginRight: '10%' }}
-    />
-    <Skeleton
-      width='25%'
-      sx={{ display: 'inline-block', marginRight: '15%' }}
-    />
-    <Skeleton width='25%' sx={{ display: 'inline-block' }} />
+    <Skeleton variant="rounded" height={20} sx={{ marginBottom: '5px', marginTop: '2rem' }} />
+    <Skeleton width="25%" sx={{ display: 'inline-block', marginRight: '10%' }} />
+    <Skeleton width="25%" sx={{ display: 'inline-block', marginRight: '15%' }} />
+    <Skeleton width="25%" sx={{ display: 'inline-block' }} />
 
     {/* Route types */}
-    <Skeleton width='45%' sx={{ fontSize: '1.5rem', marginTop: '0.75rem' }} />
-    <Skeleton variant='rounded' height={20} />
-    <Skeleton
-      width='30%'
-      sx={{ display: 'inline-block', marginRight: '.8rem' }}
-    />
-    <Skeleton
-      width='60%'
-      sx={{ display: 'inline-block', marginRight: '.8rem' }}
-    />
-    <Skeleton
-      width='40%'
-      sx={{ display: 'inline-block', marginRight: '.8rem' }}
-    />
+    <Skeleton width="45%" sx={{ fontSize: '1.5rem', marginTop: '0.75rem' }} />
+    <Skeleton variant="rounded" height={20} />
+    <Skeleton width="30%" sx={{ display: 'inline-block', marginRight: '.8rem' }} />
+    <Skeleton width="60%" sx={{ display: 'inline-block', marginRight: '.8rem' }} />
+    <Skeleton width="40%" sx={{ display: 'inline-block', marginRight: '.8rem' }} />
   </div>
 )
 
@@ -157,7 +131,7 @@ export const stopReducer = (state, action) => {
   }
 }
 
-function App () {
+function App() {
   const { setIsOpen: setTourIsOpen } = useTour()
 
   useEffect(() => {
@@ -168,10 +142,7 @@ function App () {
 
   const [travelStops, setTravelStops] = useState([])
 
-  const [selectedStop, selectedStopDispatch] = useReducer(
-    stopReducer,
-    STOP_STATE_INITIAL
-  )
+  const [selectedStop, selectedStopDispatch] = useReducer(stopReducer, STOP_STATE_INITIAL)
   const selectedStopRef = React.useRef(null)
   useEffect(() => {
     selectedStopRef.current = selectedStop
@@ -199,17 +170,13 @@ function App () {
 
   // Load travel stops on page load
   useEffect(() => {
-    async function fetchTravelStops () {
-      const response = await fetch(
-        `${process.env.REACT_APP_DATA_URL}/stops.json`
-      )
+    async function fetchTravelStops() {
+      const response = await fetch(`${process.env.REACT_APP_DATA_URL}/stops.json`)
       const data = await response.json()
 
-      const dataPrepped = data.map(stop => ({
+      const dataPrepped = data.map((stop) => ({
         label: stop[0],
-        searchValue: stop[0].startsWith(stop[1])
-          ? stop[0]
-          : `${stop[1]} ${stop[0]}`
+        searchValue: stop[0].startsWith(stop[1]) ? stop[0] : `${stop[1]} ${stop[0]}`
       }))
 
       setTravelStops(dataPrepped)
@@ -315,13 +282,13 @@ function App () {
         onChange={handleStopChange}
         blurOnSelect={true}
         loading={!travelStops.length}
-        label='Haltestelle suchen'
-        loadingText='Wird geladen...'
-        noOptionsText='Keine Ergebnisse'
-        clearText='Leeren'
-        closeText='Schließen'
-        openText='Öffnen'
-        size='small'
+        label="Haltestelle suchen"
+        loadingText="Wird geladen..."
+        noOptionsText="Keine Ergebnisse"
+        clearText="Leeren"
+        closeText="Schließen"
+        openText="Öffnen"
+        size="small"
         onSelect={() => setTourIsOpen(false)}
       />
     ),
@@ -334,11 +301,11 @@ function App () {
       selectedStop.available && (
         <ButtonGroup
           disableElevation
-          variant='contained'
-          size='small'
+          variant="contained"
+          size="small"
           className={styles.dayButtonGroup}
         >
-          {DAYS_LESS.map(day_ => (
+          {DAYS_LESS.map((day_) => (
             <Button
               key={day_}
               color={day === day_ ? 'secondary' : 'primary'}
@@ -356,28 +323,16 @@ function App () {
   const heatmap = useMemo(() => {
     if (!selectedStop.available) return null
 
-    const allDepartures = [
-      ...Object.values(selectedStop.stop.stats['heatmap'])
-    ].flat()
+    const allDepartures = [...Object.values(selectedStop.stop.stats['heatmap'])].flat()
     const maxDepartures = Math.max(...allDepartures)
-    const minDepartures = Math.max(
-      Math.min(...allDepartures.filter(n => n !== 0)),
-      1
-    )
+    const minDepartures = Math.max(Math.min(...allDepartures.filter((n) => n !== 0)), 1)
 
     return (
       <>
-        <HeatMap
-          className={styles.heatmap}
-          data={selectedStop.stop.stats['heatmap']}
-        />
+        <HeatMap className={styles.heatmap} data={selectedStop.stop.stats['heatmap']} />
         <div className={styles.heatmapLegend}>
-          <div
-            className={clsx(styles.distributionBar, styles.distributionZero)}
-          />
-          <div
-            className={clsx(styles.distributionBar, styles.heatmapLegendBar)}
-          />
+          <div className={clsx(styles.distributionBar, styles.distributionZero)} />
+          <div className={clsx(styles.distributionBar, styles.heatmapLegendBar)} />
           <div className={styles.labelZero}>
             <span>Keine Fahrten</span>
           </div>
@@ -385,9 +340,7 @@ function App () {
             <span>
               {maxDepartures === 1
                 ? '–'
-                : `${minDepartures} ${
-                    minDepartures === 1 ? 'Fahrt' : 'Fahrten'
-                  }`}
+                : `${minDepartures} ${minDepartures === 1 ? 'Fahrt' : 'Fahrten'}`}
             </span>
           </div>
           <div className={styles.labelMax}>
@@ -406,26 +359,17 @@ function App () {
       selectedStop.available && (
         <div className={styles.ranking}>
           <p>
-            An einem {day} zwischen 6 und 20 Uhr gibt es an dieser Station
-            durchschnittlich{' '}
+            An einem {day} zwischen 6 und 20 Uhr gibt es an dieser Station durchschnittlich{' '}
             <b>
-              {format(
-                selectedStop.stop.stats['rank_data'][day][
-                  'dep_per_hour_avg'
-                ].toFixed(1)
-              )}
+              {format(selectedStop.stop.stats['rank_data'][day]['dep_per_hour_avg'].toFixed(1))}
             </b>{' '}
             Abfahrten pro Stunde. An{' '}
             <b>
-              {selectedStop.stop.stats['rank_data'][day][
-                'dep_per_hour_avg_better'
-              ] < 0.001
+              {selectedStop.stop.stats['rank_data'][day]['dep_per_hour_avg_better'] < 0.001
                 ? 'weniger als 0,1'
                 : format(
                     (
-                      selectedStop.stop.stats['rank_data'][day][
-                        'dep_per_hour_avg_better'
-                      ] * 100
+                      selectedStop.stop.stats['rank_data'][day]['dep_per_hour_avg_better'] * 100
                     ).toFixed(1)
                   )}
               %{' '}
@@ -437,18 +381,14 @@ function App () {
             <div
               className={styles.distribution}
               style={{
-                width: `${selectedStop.stop.stats['rank_data'][day][
-                  'dep_per_day_worse'
-                ] * 100}%`,
+                width: `${selectedStop.stop.stats['rank_data'][day]['dep_per_day_worse'] * 100}%`,
                 backgroundColor: '#444'
               }}
             />
             <div
               className={styles.distribution}
               style={{
-                width: `${selectedStop.stop.stats['rank_data'][day][
-                  'dep_per_day_better'
-                ] * 100}%`,
+                width: `${selectedStop.stop.stats['rank_data'][day]['dep_per_day_better'] * 100}%`,
                 backgroundColor: '#3a4'
               }}
             />
@@ -456,20 +396,12 @@ function App () {
 
           <div className={styles.barLegendCircles}>
             <div className={styles.barLegendCirclesItem}>
-              <div
-                className={styles.barLegendCircle}
-                style={{ backgroundColor: '#444' }}
-              />
-              <span className={styles.barLegendCircleLabel}>
-                Gleich viel/weniger Fahrten
-              </span>
+              <div className={styles.barLegendCircle} style={{ backgroundColor: '#444' }} />
+              <span className={styles.barLegendCircleLabel}>Gleich viel/weniger Fahrten</span>
             </div>
 
             <div className={styles.barLegendCirclesItem}>
-              <div
-                className={styles.barLegendCircle}
-                style={{ backgroundColor: '#3a4' }}
-              />
+              <div className={styles.barLegendCircle} style={{ backgroundColor: '#3a4' }} />
               <span className={styles.barLegendCircleLabel}>Mehr Fahrten</span>{' '}
             </div>
           </div>
@@ -497,9 +429,7 @@ function App () {
           className={styles.distributionBar}
           style={{
             backgroundColor:
-              colorMapRouteTypes[
-                routeTypePercentages[routeTypePercentages.length - 1].type
-              ]
+              colorMapRouteTypes[routeTypePercentages[routeTypePercentages.length - 1].type]
           }}
         >
           {routeTypePercentages.map(({ type, percentage }) => (
@@ -533,30 +463,30 @@ function App () {
   return (
     <div className={styles.app}>
       <div className={styles.header}>
-        <a href='https://wdr.de/' title='Zu WDR.de'>
+        <a href="https://wdr.de/" title="Zu WDR.de">
           <img
             src={`${process.env.PUBLIC_URL}/img/wdr_logo.svg`}
-            alt='WDR Logo'
+            alt="WDR Logo"
             className={styles.logo}
           />
         </a>
         <div>
           <a
-            href='https://www1.wdr.de/nachrichten/oepnv-nrw-reichweite-verkehr-bus-bahn-100.html'
-            title='Zum begleitenden Artikel auf WDR.de'
+            href="https://www1.wdr.de/nachrichten/oepnv-nrw-reichweite-verkehr-bus-bahn-100.html"
+            title="Zum begleitenden Artikel auf WDR.de"
             className={clsx(styles.articleButton, 'tour-article')}
           >
-            <ArticleButtonIcon fontSize='inherit' />
+            <ArticleButtonIcon fontSize="inherit" />
           </a>
           <a
-            href='#faq'
-            title='Fragen zur Benutzung oder den Daten? Hier gibt es zusätzliche Informationen.'
+            href="#faq"
+            title="Fragen zur Benutzung oder den Daten? Hier gibt es zusätzliche Informationen."
             className={clsx(styles.faqButton, 'tour-faq')}
             onClick={() => {
               setTourIsOpen(false)
             }}
           >
-            <FAQButtonIcon fontSize='inherit' />
+            <FAQButtonIcon fontSize="inherit" />
           </a>
         </div>
       </div>
@@ -568,18 +498,12 @@ function App () {
           {selectedStop.available && (
             <div className={styles.charts}>
               {daySelector}
-              <h2 className={styles.stopName}>
-                {selectedStop.stop.stats['stop_name']}
-              </h2>
-              <span className={styles.municipality}>
-                {selectedStop.stop.stats['municipality']}
-              </span>
+              <h2 className={styles.stopName}>{selectedStop.stop.stats['stop_name']}</h2>
+              <span className={styles.municipality}>{selectedStop.stop.stats['municipality']}</span>
               {ranking}
               <h3 className={styles.chartTitle}>Abfahrten pro Stunde</h3>
               {heatmap}
-              <h3 className={styles.chartTitle}>
-                Von dieser Haltestelle fahren:
-              </h3>
+              <h3 className={styles.chartTitle}>Von dieser Haltestelle fahren:</h3>
               {routeTypes}
             </div>
           )}
@@ -596,11 +520,11 @@ function App () {
       </div>
       <div className={styles.footer}>
         <span>&copy; WDR 2022</span>&nbsp;|&nbsp;
-        <a href='https://www1.wdr.de/impressum/index.html'>Impressum</a>
+        <a href="https://www1.wdr.de/impressum/index.html">Impressum</a>
         &nbsp;|&nbsp;
-        <a href='https://www1.wdr.de/hilfe/datenschutz102.html'>Datenschutz</a>
+        <a href="https://www1.wdr.de/hilfe/datenschutz102.html">Datenschutz</a>
         &nbsp;|&nbsp;
-        <a href='#contact'>Kontakt</a>
+        <a href="#contact">Kontakt</a>
       </div>
     </div>
   )

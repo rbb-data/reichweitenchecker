@@ -15,7 +15,7 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import customMarkerImg from './img/haltestelle_marker.svg'
 
 import mapStyle from './map-style.json'
-import { customMapStyleToQueryParam } from './mapHelper';
+import { customMapStyleToQueryParam } from './mapHelper'
 
 maplibregl.workerClass = maplibreglWorker
 
@@ -29,10 +29,7 @@ const TransfersSwitch = styled(Switch)(({ theme }) => ({
   '& .MuiSwitch-switchBase.Mui-checked': {
     color: colorMapAlt(0.4),
     '&:hover': {
-      backgroundColor: alpha(
-        colorMapAlt(0.4),
-        theme.palette.action.hoverOpacity
-      )
+      backgroundColor: alpha(colorMapAlt(0.4), theme.palette.action.hoverOpacity)
     }
   },
   '& .MuiSwitch-switchBase + .MuiSwitch-track': {
@@ -54,7 +51,7 @@ const bounds = [
 // see: https://learn.microsoft.com/en-us/bingmaps/rest-services/imagery/get-imagery-metadata
 const imagerySet = 'RoadOnDemand'
 
-export default function Map ({ selectedStop, day, ...props }) {
+export default function Map({ selectedStop, day, ...props }) {
   const mapContainer = useRef(null)
   const map = useRef(null)
 
@@ -75,42 +72,40 @@ export default function Map ({ selectedStop, day, ...props }) {
       .then((res) => res.json())
       .then((data) => {
         // see: https://learn.microsoft.com/en-us/bingmaps/articles/custom-map-styles-in-bing-maps?source=recommendations#custom-map-styles-in-the-rest-and-tile-services
-        const customStyles = customMapStyleToQueryParam(mapStyle.custom);
+        const customStyles = customMapStyleToQueryParam(mapStyle.custom)
 
         const resource = data.resourceSets[0].resources[0]
-        mapStyle.sources.bing.tiles = resource.imageUrlSubdomains.map(
-          (subdomain) => {
-            let tileURL = resource.imageUrl.replace(/{subdomain}/g, subdomain);
-            
-            if (customStyles != null) {
-              tileURL += '&' + customStyles;
-            }
+        mapStyle.sources.bing.tiles = resource.imageUrlSubdomains.map((subdomain) => {
+          let tileURL = resource.imageUrl.replace(/{subdomain}/g, subdomain)
 
-            return tileURL;
+          if (customStyles != null) {
+            tileURL += '&' + customStyles
           }
-        )
+
+          return tileURL
+        })
 
         map.current = new maplibregl.Map({
           container: mapContainer.current,
           style: mapStyle,
           zoom: 8,
-          center: [13.42475, 52.50720], // center of berlin
+          center: [13.42475, 52.5072], // center of berlin
           // maxBounds: bounds, // TODO add max bounds
           dragRotate: false,
           touchPitch: false,
           attributionControl: false //new maplibregl.AttributionControl()//`<a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>`,
         })
-    
+
         map.current.addControl(
           new maplibregl.AttributionControl({
             customAttribution: [
               `<a href="https://www.microsoft.com/" rel="nofollow" target="_blank">© 2022 Microsoft Corporation</a>`,
-              `<a href="https://www.delfi.de/" rel="nofollow" target="_blank">© DELFI</a>`,
+              `<a href="https://www.delfi.de/" rel="nofollow" target="_blank">© DELFI</a>`
             ]
           }),
           'bottom-right'
         )
-    
+
         map.current.touchZoomRotate.disableRotation()
         // TODO fit bounds
         // map.current.fitBounds([
@@ -124,7 +119,7 @@ export default function Map ({ selectedStop, day, ...props }) {
           }),
           'bottom-right'
         )
-      });
+      })
 
     return () => {
       map.current.remove()
@@ -148,10 +143,7 @@ export default function Map ({ selectedStop, day, ...props }) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
       }
 
-      new maplibregl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(description)
-        .addTo(map.current)
+      new maplibregl.Popup().setLngLat(coordinates).setHTML(description).addTo(map.current)
     })
 
     // Change the cursor to a pointer when the mouse is over the places layer.
@@ -174,8 +166,7 @@ export default function Map ({ selectedStop, day, ...props }) {
     markerSvg.width = 34
     markerSvg.height = 50
 
-    const markerLocation =
-      selectedStop.stop.travelTimes[dayRef.current]['stop_info']['coord']
+    const markerLocation = selectedStop.stop.travelTimes[dayRef.current]['stop_info']['coord']
     const marker = new maplibregl.Marker({
       anchor: 'bottom',
       element: markerSvg
@@ -187,9 +178,7 @@ export default function Map ({ selectedStop, day, ...props }) {
   // Destination unloading
   useEffect(() => {
     if (map.current)
-      map.current
-        .getSource('destinations')
-        ?.setData({ type: 'FeatureCollection', features: [] })
+      map.current.getSource('destinations')?.setData({ type: 'FeatureCollection', features: [] })
   }, [map, selectedStop])
 
   // Destinations
@@ -197,12 +186,12 @@ export default function Map ({ selectedStop, day, ...props }) {
     if (!map.current || !selectedStop.available) return // wait for map to initialize
 
     const destinations = selectedStop.stop.travelTimes[day].destinations.filter(
-      d => mapShowTransfers || d.trans === 0
+      (d) => mapShowTransfers || d.trans === 0
     )
 
     const geojsonData = {
       type: 'FeatureCollection',
-      features: destinations.map(destination => ({
+      features: destinations.map((destination) => ({
         type: 'Feature',
         geometry: {
           type: 'Point',
@@ -216,8 +205,7 @@ export default function Map ({ selectedStop, day, ...props }) {
           description: `<b>${destination['name']}</b>
           <br />
           ${
-            destination['from'] &&
-            destination['from'] !== selectedStop.stop.stats.stop_name
+            destination['from'] && destination['from'] !== selectedStop.stop.stats.stop_name
               ? `Abfahrt von ${destination['from']} <br />`
               : ''
           }
@@ -275,7 +263,7 @@ export default function Map ({ selectedStop, day, ...props }) {
       map.current.once('load', doTheThing)
       // Map has loaded and source has been created, but is still processing a change
     } else if (source && !map.current.isSourceLoaded('destinations')) {
-      map.current.once('sourcedata', e => {
+      map.current.once('sourcedata', (e) => {
         if (e.sourceId === 'destinations') {
           doTheThing()
         }
@@ -291,11 +279,10 @@ export default function Map ({ selectedStop, day, ...props }) {
     if (!(selectedStop.available && map.current)) return
 
     const currentlySelectedDay = dayRef.current
-    const destinations =
-      selectedStop.stop.travelTimes[currentlySelectedDay].destinations
+    const destinations = selectedStop.stop.travelTimes[currentlySelectedDay].destinations
 
-    const destLat = destinations.map(c => c['coord'][1])
-    const destLng = destinations.map(c => c['coord'][0])
+    const destLat = destinations.map((c) => c['coord'][1])
+    const destLng = destinations.map((c) => c['coord'][0])
     const handle = window.setTimeout(() => {
       //map.invalidateSize()
       if (destLat.length > 0 && destLng.length > 0) {
@@ -309,12 +296,8 @@ export default function Map ({ selectedStop, day, ...props }) {
       } else {
         map.current.easeTo({
           center: [
-            selectedStop.stop.travelTimes[currentlySelectedDay]['stop_info'][
-              'coord'
-            ][1],
-            selectedStop.stop.travelTimes[currentlySelectedDay]['stop_info'][
-              'coord'
-            ][0]
+            selectedStop.stop.travelTimes[currentlySelectedDay]['stop_info']['coord'][1],
+            selectedStop.stop.travelTimes[currentlySelectedDay]['stop_info']['coord'][0]
           ],
           zoom: 13
         })
@@ -328,11 +311,8 @@ export default function Map ({ selectedStop, day, ...props }) {
     return (
       <div className={styles.customMapControls}>
         <div className={styles.customMapControl}>
-          <Stack direction='row' spacing={0} alignItems='center'>
-            <div
-              className={styles.indicator}
-              style={{ backgroundColor: colorMapAlt(1) }}
-            />
+          <Stack direction="row" spacing={0} alignItems="center">
+            <div className={styles.indicator} style={{ backgroundColor: colorMapAlt(1) }} />
             <span>ohne umsteigen</span>
             <TransfersSwitch
               defaultChecked
@@ -340,10 +320,7 @@ export default function Map ({ selectedStop, day, ...props }) {
               inputProps={{ 'aria-label': 'Mit umsteigen' }}
             />
             <span>mit umsteigen</span>
-            <div
-              className={styles.indicator}
-              style={{ backgroundColor: colorMapAlt(0.33) }}
-            />
+            <div className={styles.indicator} style={{ backgroundColor: colorMapAlt(0.33) }} />
           </Stack>
         </div>
       </div>

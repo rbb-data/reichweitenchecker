@@ -6,7 +6,6 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { TourProvider } from '@reactour/tour'
 
-
 const theme = createTheme({
   typography: {
     fontFamily: ['Thesis', 'sans-serif'].join(','),
@@ -48,29 +47,29 @@ const tourStyles = {
     rx: 10,
     height: height - 12
   }),
-  maskWrapper: base => ({
+  maskWrapper: (base) => ({
     ...base,
     color: '#b37500'
   }),
-  badge: base => ({
+  badge: (base) => ({
     ...base,
     left: 'auto',
     right: '-0.8125em',
     display: 'none'
   }),
-  controls: base => ({
+  controls: (base) => ({
     ...base,
     marginTop: 10,
     marginRight: -10
   }),
-  close: base => ({
+  close: (base) => ({
     ...base,
     right: 8,
     top: 8,
     width: 12,
     height: 12
   }),
-  arrow: base => ({
+  arrow: (base) => ({
     ...base,
     width: 20,
     height: 20
@@ -84,8 +83,7 @@ const tourSteps = [
   },
   {
     selector: '.tour-faq',
-    content:
-      'Fragen zur Benutzung oder den Daten? Hier gibt es zusätzliche Informationen.',
+    content: 'Fragen zur Benutzung oder den Daten? Hier gibt es zusätzliche Informationen.',
     position: 'left',
     styles: {
       ...tourStyles,
