@@ -2,6 +2,19 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Development
+
+### Run locally
+
+First, launch the proxy following instructions here:  https://github.com/rbb-data/bing-proxy
+
+```bash
+# serves files in data/ from localhost:9001
+npm run serve
+# start app
+npm run start
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
