@@ -19,5 +19,8 @@
   "transition": {
     "duration": 250,
     "delay": 0
+  },
+  "custom": {
+    "version": "1.0"
   }
 }

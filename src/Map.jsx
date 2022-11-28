@@ -15,6 +15,7 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import customMarkerImg from './img/haltestelle_marker.svg'
 
 import mapStyle from './map-style.json'
+import { customMapStyleToQueryParam } from './mapHelper';
 
 maplibregl.workerClass = maplibreglWorker
 
@@ -73,9 +74,20 @@ export default function Map ({ selectedStop, day, ...props }) {
     fetch(process.env.REACT_APP_BING_PROXY)
       .then((res) => res.json())
       .then((data) => {
+        // see: https://learn.microsoft.com/en-us/bingmaps/articles/custom-map-styles-in-bing-maps?source=recommendations#custom-map-styles-in-the-rest-and-tile-services
+        const customStyles = customMapStyleToQueryParam(mapStyle.custom);
+
         const resource = data.resourceSets[0].resources[0]
         mapStyle.sources.bing.tiles = resource.imageUrlSubdomains.map(
-          (subdomain) => resource.imageUrl.replace(/{subdomain}/g, subdomain)
+          (subdomain) => {
+            let tileURL = resource.imageUrl.replace(/{subdomain}/g, subdomain);
+            
+            if (customStyles != null) {
+              tileURL += '&' + customStyles;
+            }
+
+            return tileURL;
+          }
         )
 
         map.current = new maplibregl.Map({
