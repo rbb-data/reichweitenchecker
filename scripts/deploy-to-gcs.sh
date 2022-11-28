@@ -24,7 +24,7 @@ set -o xtrace  # prints every command before execution
 cd $(dirname $0)/..
 
 # load environment variables from file
-export $(cat .env | xargs)
+export $(cat .env .env.production | xargs)
 
 
 compress() {
