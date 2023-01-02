@@ -27,42 +27,46 @@ cd $(dirname $0)/..
 export $(cat .env .env.production | xargs)
 
 
-compress() {
-  # compress text files
-  text_files=$(find "$BUILD_DIR" -name '*.html' -o -name '*.css' -o -name '*.js')
-  for f in $text_files; do gzip $f && mv $f.gz $f; done
-}
-
 upload() {
-  # destination folder in google cloud storage
-  cloud_dst=gs:/"$base_path"
-
   # set google cloud project if necessary
   cloud_project=rbb-data-static-file-server
   [ "$(gcloud config get-value project)" = "$cloud_project" ] || gcloud config set project "$cloud_project"
 
-  # sync files to the cloud
-  gsutil rsync -d -r -c "$BUILD_DIR" "$cloud_dst"
+  # destination folder in google cloud storage
+  cloud_dst=gs:/"$base_path"
 
-  # configure content types and encodings
-  gsutil setmeta \
-    -h 'Content-Encoding:gzip' \
-    -h 'Content-Type:text/html' \
-    -h 'Cache-Control:private,max-age=0,no-transform' "$cloud_dst"/**/*.html
-  gsutil setmeta \
-    -h 'Content-Encoding:gzip' \
-    -h 'Content-Type:text/css' \
-    -h 'Cache-Control:public,max-age=31536000,immutable' "$cloud_dst"/**/*.css
-  gsutil setmeta \
-    -h 'Content-Encoding:gzip' \
-    -h 'Content-Type:text/javascript' \
-    -h 'Cache-Control:public,max-age=31536000,immutable' "$cloud_dst"/**/*.js
+  # The content is first removed, then re-added, even though
+  # gsutil does come with a subcommand for syncing. `gsutil rsync`
+  # does not come with an option to compress files though. To
+  # compress text files locally, then uploading the compressed
+  # files and _subsequently_ configuring the appropriate content
+  # encodings and types is dangerous since a user that pulls the
+  # data while the application is updating will end up with
+  # corrupted files. That's why it's necessary to first delete all
+  # files, then re-add and compress them while copying to the cloud.
+
+  # remove folder if it exists
+  gsutil -q stat ${cloud_dst}/* && gsutil rm -r $cloud_dst
+
+  # compress and upload files
+  gsutil cp -r -z html,css,js "$BUILD_DIR" "$cloud_dst"
 
   # configure caching of assets
+  gsutil setmeta -h 'Cache-Control:public,max-age=0,no-transform' "$cloud_dst"/**/*.html
+  gsutil setmeta -h 'Cache-Control:public,max-age=31536000,immutable' "$cloud_dst"/**/*.{css,js}
   gsutil setmeta -h 'Cache-Control:public,max-age=31536000' "$cloud_dst"/**/*.{png,svg}
 }
 
 main() {
+  # get the current folder name
+  project_name=$(basename $(pwd))
+
+  # skip when the project was not templated
+  if [[ "$project_name" = 'svelte-starter' ]]; then
+    echo 'Project was not templated (current folder name: '"$project_name"')' >&2
+    exit 1
+  fi
+
   # use base path from command line or from the environment
   base_path=${2:-"$BASE_PATH"}
 
@@ -77,8 +81,10 @@ main() {
     BASE_PATH="$base_path" npm run build
   fi
 
-  compress
   upload
+
+  url=https://storage.googleapis.com"$base_path"/index.html
+  echo -e '\nDeployed to' "$url"
 }
 
 main "$@"

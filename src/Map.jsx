@@ -68,7 +68,9 @@ export default function Map({ selectedStop, day, ...props }) {
     // this is necessary to get the current tile URL
     // since tile URLs for Bing Maps change regularly
     // read more about this here: https://learn.microsoft.com/en-us/bingmaps/rest-services/directly-accessing-the-bing-maps-tiles
-    fetch(process.env.REACT_APP_BING_PROXY)
+    fetch(
+      `https://dev.virtualearth.net/REST/V1/Imagery/Metadata/${imagerySet}?uriScheme=https&output=json&include=ImageryProviders&key=${process.env.REACT_APP_BING_KEY}`
+    )
       .then((res) => res.json())
       .then((data) => {
         // see: https://learn.microsoft.com/en-us/bingmaps/articles/custom-map-styles-in-bing-maps?source=recommendations#custom-map-styles-in-the-rest-and-tile-services

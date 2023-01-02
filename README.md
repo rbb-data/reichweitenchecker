@@ -6,8 +6,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Run locally
 
-First, launch the proxy following instructions here: https://github.com/rbb-data/bing-proxy
-
 ```bash
 # serves files in data/ from localhost:9001
 npm run serve
