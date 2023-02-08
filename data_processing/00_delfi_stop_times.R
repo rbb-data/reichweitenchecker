@@ -1,3 +1,7 @@
+# Reads the DELFI feed and produces a list of data tables,
+# one for each day in a given week, with stop times for
+# all stops in Berlin/Brandenburg.
+
 library(tidyverse)
 library(tidytransit)
 library(lubridate)
@@ -6,7 +10,7 @@ library(geojsonsf)
 
 # Read GTFS data from DELFI
 # DELFI-Daten laden
-delfi <- read_gtfs("data/20221114_fahrplaene_gesamtdeutschland_gtfs.zip", 
+delfi <- read_gtfs("data/20230109_fahrplaene_gesamtdeutschland_gtfs.zip", 
                    files = c("agency", "calendar_dates", "calendar", "frequencies",
                              "routes", "shapes", "stop_times", "stops",
                              "transfers", "trips"),
@@ -17,10 +21,10 @@ delfi <- read_gtfs("data/20221114_fahrplaene_gesamtdeutschland_gtfs.zip",
 library(dtplyr)
 library(data.table)
 
-# geo data for NRW
+# geo data for Berlin/Brandenburg
 geo_nrw <- st_read("data/gemeinden_be_bb_geo.json")
 
-# filter stations in NRW: convert to sf and join
+# filter stations in BE/BB: convert to sf and join
 all_stops <- st_as_sf(delfi$stops, coords=c("stop_lon", "stop_lat"), crs=4326)
 nrw_stops = st_join(all_stops, geo_nrw, join=st_within, left=FALSE)
 
@@ -48,7 +52,7 @@ fwrite(stations_coords, "data/stations_coords.csv")
 
 service_0912 <- full_join(
   delfi$calendar %>% filter(monday == 1),
-  delfi$calendar_dates %>% filter(date == "2022-11-14"),
+  delfi$calendar_dates %>% filter(date == "2023-05-22"),
   by = "service_id"
   ) %>% 
   replace_na(replace=list(exception_type=0)) %>% 
@@ -56,7 +60,7 @@ service_0912 <- full_join(
 
 service_0913 <- full_join(
   delfi$calendar %>% filter(tuesday == 1),
-  delfi$calendar_dates %>% filter(date == "2022-11-15"),
+  delfi$calendar_dates %>% filter(date == "2023-05-23"),
   by = "service_id"
   ) %>% 
   replace_na(replace=list(exception_type=0)) %>% 
@@ -64,7 +68,7 @@ service_0913 <- full_join(
 
 service_0914 <- full_join(
   delfi$calendar %>% filter(wednesday == 1),
-  delfi$calendar_dates %>% filter(date == "2022-11-16"),
+  delfi$calendar_dates %>% filter(date == "2023-05-24"),
   by = "service_id"
   ) %>% 
   replace_na(replace=list(exception_type=0)) %>% 
@@ -72,7 +76,7 @@ service_0914 <- full_join(
 
 service_0915 <- full_join(
   delfi$calendar %>% filter(thursday == 1),
-  delfi$calendar_dates %>% filter(date == "2022-11-17"),
+  delfi$calendar_dates %>% filter(date == "2023-05-25"),
   by = "service_id"
   ) %>% 
   replace_na(replace=list(exception_type=0)) %>% 
@@ -80,7 +84,7 @@ service_0915 <- full_join(
 
 service_0916 <- full_join(
   delfi$calendar %>% filter(friday == 1),
-  delfi$calendar_dates %>% filter(date == "2022-11-18"),
+  delfi$calendar_dates %>% filter(date == "2023-05-26"),
   by = "service_id"
 ) %>% 
   replace_na(replace=list(exception_type=0)) %>% 
@@ -88,7 +92,7 @@ service_0916 <- full_join(
 
 service_0917 <- full_join(
   delfi$calendar %>% filter(saturday == 1),
-  delfi$calendar_dates %>% filter(date == "2022-11-19"),
+  delfi$calendar_dates %>% filter(date == "2023-05-27"),
   by = "service_id"
 ) %>% 
   replace_na(replace=list(exception_type=0)) %>% 
@@ -96,7 +100,7 @@ service_0917 <- full_join(
 
 service_0918 <- full_join(
   delfi$calendar %>% filter(sunday == 1),
-  delfi$calendar_dates %>% filter(date == "2022-11-20"),
+  delfi$calendar_dates %>% filter(date == "2023-05-28"),
   by = "service_id"
 ) %>% 
   replace_na(replace=list(exception_type=0)) %>% 

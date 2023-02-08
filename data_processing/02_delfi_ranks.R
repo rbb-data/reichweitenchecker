@@ -1,3 +1,6 @@
+# Compute statistics-based ranks for each stop in Berlin/Brandenburg
+# (we have no use for these statistics, so no need to run this script)
+
 library(tidyverse)
 library(data.table)
 

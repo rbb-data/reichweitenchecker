@@ -8,7 +8,7 @@ from gtfs_kit.feed import read_feed
 import pandas as pd
 
 print("Reading feed")
-feed = read_feed("data/20221114_fahrplaene_gesamtdeutschland_gtfs.zip", "m")
+feed = read_feed("data/20230109_fahrplaene_gesamtdeutschland_gtfs.zip", "m")
 
 # Remove faulty transfers
 print("Faulty transfers")
@@ -104,4 +104,4 @@ print("After:", len(feed.stops["stop_name"].unique()))
 
 
 # Save feed
-feed.write(Path("data/20220829_preprocessed.zip"))
+feed.write(Path("data/20230109_preprocessed.zip"))

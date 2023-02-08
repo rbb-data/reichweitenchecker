@@ -17,8 +17,12 @@ import pandas as pd
 
 def load_feed():
     DATA_DIR = Path("data").absolute()
-    gtfs_de = read_feed(DATA_DIR / "20221114_fahrplaene_gesamtdeutschland_gtfs.zip", "m")
-    gtfs_de.stops["geometry"] = gp.points_from_xy(gtfs_de.stops.stop_lon, gtfs_de.stops.stop_lat)
+    gtfs_de = read_feed(
+        DATA_DIR / "20230109_fahrplaene_gesamtdeutschland_gtfs.zip", "m"
+    )
+    gtfs_de.stops["geometry"] = gp.points_from_xy(
+        gtfs_de.stops.stop_lon, gtfs_de.stops.stop_lat
+    )
     gdf_stops = gp.GeoDataFrame(gtfs_de.stops.copy(), geometry="geometry")
     gdf_stops.crs = "EPSG:4326"
     gdf_stops.to_crs("EPSG:25832", inplace=True)
@@ -36,7 +40,9 @@ def limit_to_germany(gdf_stops: gp.GeoDataFrame):
 def get_nearby_stops(
     gdf_stops: gp.GeoDataFrame, row: pd.Series, radius: float = 500
 ) -> pd.DataFrame:
-    stop_location = row.geometry  # gdf_stops[gdf_stops["stop_id"] == stop_id]["geometry"].values[0]
+    stop_location = (
+        row.geometry
+    )  # gdf_stops[gdf_stops["stop_id"] == stop_id]["geometry"].values[0]
     copy_df = gdf_stops[["stop_id", "geometry"]].copy()
     copy_df["distance"] = gdf_stops.distance(stop_location)
     result_df = copy_df[(copy_df["distance"] < radius)][["stop_id", "distance"]].copy()
@@ -44,7 +50,9 @@ def get_nearby_stops(
     return result_df
 
 
-def generate_transfers(gdf_stops: gp.GeoDataFrame, radius: float = 500, chunk_size: int = 50_000):
+def generate_transfers(
+    gdf_stops: gp.GeoDataFrame, radius: float = 500, chunk_size: int = 50_000
+):
     dfs_transfers = []
 
     for chunk in chunked_stops(gdf_stops, width=chunk_size, overlap=radius * 2):
@@ -71,7 +79,9 @@ def generate_transfers(gdf_stops: gp.GeoDataFrame, radius: float = 500, chunk_si
     return df_transfers
 
 
-def generate_for_chunk(chunk: pd.DataFrame, radius: float) -> Generator[pd.DataFrame, None, None]:
+def generate_for_chunk(
+    chunk: pd.DataFrame, radius: float
+) -> Generator[pd.DataFrame, None, None]:
     chunk_size = len(chunk)
     # chunk_shrinking = chunk.copy()
     for i, row in enumerate(chunk.itertuples()):
@@ -93,7 +103,9 @@ def generate_for_chunk(chunk: pd.DataFrame, radius: float) -> Generator[pd.DataF
             inplace=True,
         )
         nearby_stops["min_transfer_time"] = np.ceil(nearby_stops["min_transfer_time"])
-        nearby_stops.loc[nearby_stops["min_transfer_time"] < 120, ["min_transfer_time"]] = 120
+        nearby_stops.loc[
+            nearby_stops["min_transfer_time"] < 120, ["min_transfer_time"]
+        ] = 120
 
         # Reorder columns
         nearby_stops = nearby_stops[

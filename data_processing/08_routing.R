@@ -1,4 +1,14 @@
-# Calculate travel times for all stops
+# Calculate travel times from all stops to all city centres
+
+# Current state:
+# - The city centre stop "Kostrzyn (PL), Bahnhof" does not exist (not sure why)
+# - Runs:
+#     - "wednesday" / "day": memory exhausted for city centre stops "S+U Berlin Hauptbahnhof",
+#       "S Potsdam Hauptbahnhof", "Falkensee, Bahnhof", "S Hennigsdorf Bhf", "S Hoppegarten",
+#     - "saturday" / "day": memory exhausted for city centre stop "S+U Berlin Hauptbahnhof"
+#     - "sunday" / "day": memory exhausted for city centre stop "S+U Berlin Hauptbahnhof"
+# - Routing failed only when an extended time setting was specified (8am-8pm), data is available
+#   though for a more constrained time setting (8am-noon)
 
 # install.packages('tidyverse')
 # install.packages('tidytransit')
@@ -18,48 +28,57 @@ library(geojsonsf)
 # Konstanten
 args <- commandArgs(trailingOnly = TRUE)
 DAY_NAME <- args[1]
+DAY_TIME <- args[2]
 
 if (DAY_NAME == "wednesday") {
-  START_TIME <- 6 * 3600
-  END_TIME <- 10 * 3600
-  DAY <- "2022-11-16"
+  DAY <- "2023-05-24"
 } else if (DAY_NAME == "saturday") {
-  START_TIME <- 10 * 3600
-  END_TIME <- 14 * 3600
-  DAY <- "2022-11-19"
+  DAY <- "2023-05-27"
 } else if (DAY_NAME == "sunday") {
-  START_TIME <- 10 * 3600
-  END_TIME <- 14 * 3600
-  DAY <- "2022-11-20"
+  DAY <- "2023-05-28"
 } else {
   print("Invalid day")
   quit()
 }
 
+# START_TIME: earliest departure time
+# END_TIME: latest arrival time
+
+if (DAY_TIME == "day") {
+  START_TIME <- 8 * 3600
+  END_TIME <- 20 * 3600
+} else if (DAY_TIME == "night") {
+  START_TIME <- 20 * 3600
+  END_TIME <- 24 * 3600 - 1
+} else {
+  print("Invalid time")
+  quit()
+}
+
+# 1 hour
 MAX_TRAVEL_TIME <- 60 * 60
+
+TARGET_DIR <- sprintf(
+  "data/travel_times_%s_%s_arrival",
+   DAY_NAME,
+   DAY_TIME
+)
+
+# create target dir if it doesn't exist
+dir.create(TARGET_DIR)
 
 
 print("Reading GTFS...")
 
-gtfs_de <- read_gtfs("data/20220829_preprocessed.zip", quiet = FALSE)
+gtfs_de <- read_gtfs("data/20230109_preprocessed.zip", quiet = FALSE)
 
 
 print("Generating stop names...")
-# Geo-Daten NRW laden
-geo_nrw <- st_read("data/gemeinden_be_bb_geo.json")
+cities = read.csv(file = "data/Public-Transport-2023-cities.csv")
+unique_stop_names <- unique(cities$stop_name)
+print(unique_stop_names)
 
-# Stationen in SF umwandeln und dann nach NRW filtern
-all_stops <-
-  st_as_sf(gtfs_de$stops,
-    coords = c("stop_lon", "stop_lat"),
-    crs = 4326
-  )
-
-nrw_stops <- st_join(all_stops, geo_nrw, join = st_within, left = FALSE)
-# TODO: for now, computed for a small subsample
-# unique_stop_names <- unique(nrw_stops$stop_name)
-unique_stop_names <- head(unique(nrw_stops$stop_name))
-rm(geo_nrw, all_stops, nrw_stops)
+# rm(geo_nrw, all_stops, nrw_stops)
 
 # Filter existing files
 # existing_files <- list.files(sprintf("data/travel_times_%s", DAY_NAME), "*.csv", full.names = FALSE)
@@ -78,7 +97,6 @@ rm(gtfs_de)
 # Cluster setup
 gc()
 
-# TODO: choose cores
 print("Setting up cluster...")
 no_cores <- 2 # detectCores() / 2
 cl <- makeCluster(no_cores, type = "FORK")
@@ -93,16 +111,17 @@ failures <-
           travel_times(
             stop_times,
             stop_name,
+            arrival = TRUE,
             stop_dist_check = FALSE,
-            max_departure_time = END_TIME,
+            time_range = END_TIME - START_TIME,
             return_coords = TRUE,
             max_transfers = 3
           )
         write.csv(
           tt[tt$travel_time <= MAX_TRAVEL_TIME, ],
           sprintf(
-            "data/travel_times_%s/%s.csv",
-            DAY_NAME,
+            "%s/%s.csv",
+            TARGET_DIR,
             URLencode(stop_name, reserved = TRUE, repeated = TRUE)
           )
         )
@@ -119,4 +138,4 @@ failures <-
 stopCluster(cl)
 
 failures_unlist <- unlist(failures)
-write.csv(failures_unlist, sprintf("fails_%s.csv", DAY_NAME))
+write.csv(failures_unlist, sprintf("data/fails_%s_%s.csv", DAY_NAME, DAY_TIME))

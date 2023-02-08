@@ -13,8 +13,12 @@ import pandas as pd
 
 def load_feed():
     DATA_DIR = Path("data").absolute()
-    gtfs_de = read_feed(DATA_DIR / "20221114_fahrplaene_gesamtdeutschland_gtfs.zip", "m")
-    gtfs_de.stops["geometry"] = gp.points_from_xy(gtfs_de.stops.stop_lon, gtfs_de.stops.stop_lat)
+    gtfs_de = read_feed(
+        DATA_DIR / "20230109_fahrplaene_gesamtdeutschland_gtfs.zip", "m"
+    )
+    gtfs_de.stops["geometry"] = gp.points_from_xy(
+        gtfs_de.stops.stop_lon, gtfs_de.stops.stop_lat
+    )
     gdf_stops = gp.GeoDataFrame(gtfs_de.stops.copy(), geometry="geometry")
     gdf_stops.crs = "EPSG:4326"
     gdf_stops.to_crs("EPSG:25832", inplace=True)
@@ -22,7 +26,9 @@ def load_feed():
     return gtfs_de, gdf_stops
 
 
-def merge_transfers_with_locations(gtfs_de: Feed, gdf_stops: gp.GeoDataFrame) -> pd.DataFrame:
+def merge_transfers_with_locations(
+    gtfs_de: Feed, gdf_stops: gp.GeoDataFrame
+) -> pd.DataFrame:
     """Merge transfers with stop locations."""
     df_transfers = gtfs_de.transfers.copy()
     gdf_from = (

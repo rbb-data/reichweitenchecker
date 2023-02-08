@@ -1,0 +1,78 @@
+city_id,city_name,city_type,city_centre_lat,city_centre_lon,main_station_lat,main_station_lon,stop_id,stop_name,stop_lat,stop_lon
+berlin,Berlin,Metropole,52.5170365,13.3888599,52.5246361,13.369861,de:11000:900003201,S+U Berlin Hauptbahnhof,52.525605,13.369075
+potsdam,Potsdam,Oberzentrum,52.4009309,13.0591397,52.3915165,13.0672235,de:12054:900230999,S Potsdam Hauptbahnhof,52.391663,13.066172
+brandenburg-a-d-havel,Brandenburg a. d. Havel,Oberzentrum,52.4108261,12.5497933,52.4008975,12.566181328179445,de:12051:900275110,"Brandenburg, Hauptbahnhof",52.400794,12.566036
+cottbus,Cottbus,Oberzentrum,51.7567447,14.3357307,51.7512991,14.3223077,de:12052:900470000,"Cottbus, Hauptbahnhof",51.750985,14.324464
+frankfurt-oder,Frankfurt (Oder),Oberzentrum,52.3412273,14.549452,52.3365359,14.5466945,de:12053:900360000,"Frankfurt (Oder), Bahnhof",52.336709,14.547147
+angermünde,Angermünde,Mittelzentrum,53.017276,13.9981503,53.0158331,13.9959905,de:12073:900340004,"Angermünde, Bahnhof",53.015822,13.995871
+bad-belzig,Bad Belzig,Mittelzentrum,52.1405622,12.5865873,52.1360071,12.5950321,de:12069:900220143,"Bad Belzig, Bahnhof",52.136259,12.59523
+bad-freienwalde-oder,Bad Freienwalde (Oder),Mittelzentrum,52.787521,14.0300689,52.789474,14.0369184,de:12064:900321025_G,"Bad Freienwalde, Bahnhof",52.789925,14.035805
+beeskow,Beeskow,Mittelzentrum,52.1721569,14.2471058,52.1776785,14.2509113,de:12067:900311129,"Beeskow, Bahnhof",52.177662,14.250828
+eberswalde,Eberswalde,Mittelzentrum,52.8350807,13.7996542,52.8340052,13.7977826,de:12060:900350127,"Eberswalde, Hauptbahnhof",52.833684,13.79695
+eisenhüttenstadt,Eisenhüttenstadt,Mittelzentrum,52.1448863,14.6294413,52.1479787,14.6583612,de:12067:900311307,"Eisenhüttenstadt, Bahnhof",52.147803,14.658326
+finsterwalde,Finsterwalde,Mittelzentrum,51.6315282,13.707358,51.6369946,13.710383,de:12062:900415005,"Finsterwalde, Bahnhof",51.636966,13.710318
+forst-lausitz,Forst (Lausitz),Mittelzentrum,51.7438586,14.6455395,51.7389354,14.637064,de:12071:900445010,"Forst, Bahnhof",51.739249,14.63764
+fürstenwalde-spree,Fürstenwalde/Spree,Mittelzentrum,52.3580209,14.064985,52.3671912,14.0584217,de:12067:900310001,"Fürstenwalde, Bahnhof",52.367029,14.059618
+guben,Guben,Mittelzentrum,51.9503235,14.7153567,51.9590817,14.7067478,de:12071:900445593,"Guben, Bahnhof",51.957654,14.707037
+herzberg-elster,Herzberg (Elster),Mittelzentrum,51.6924078,13.2358585,51.6794431,13.2028483,de:12062:900415683,"Herzberg (Elster), Bahnhof",51.679587,13.203034
+jüterbog,Jüterbog,Mittelzentrum,51.9916493,13.0801128,51.9974208,13.0540462,de:12072:900245002,"Jüterbog, Bahnhof",51.997564,13.054871
+kyritz,Kyritz,Mittelzentrum,52.9430648,12.3966896,52.9424017,12.3909777,de:12068:900205139,"Kyritz, Bahnhof",52.942188,12.391295
+lübben-spreewald,Lübben (Spreewald),Mittelzentrum,51.9418987,13.8963805,51.940029,13.8765309,de:12061:900261512,"Lübben, Bahnhof",51.940723,13.876924
+lübbenau-spreewald,Lübbenau (Spreewald),Mittelzentrum,51.8680114,13.9689477,51.8620528,13.9611658,de:12066:900435602,"Lübbenau, Bahnhof",51.862114,13.962173
+luckau,Luckau,Mittelzentrum,51.8524163,13.7150055,51.85772675,13.713958480913371,de:12061:900261567::2,"Luckau, Karl-Marx-Str.",51.852957,13.706848
+luckenwalde,Luckenwalde,Mittelzentrum,52.0902045,13.1741882,52.0904426,13.1601561,de:12072:900245016_G,"Luckenwalde, Bahnhof",52.090382,13.160108
+nauen,Nauen,Mittelzentrum,52.6061065,12.8772599,52.6127314,12.8855858,de:12063:900210005,"Nauen, Bahnhof",52.612335,12.885156
+neuruppin,Neuruppin,Mittelzentrum,52.9243859,12.8092919,52.9298674,12.8102845,de:12068:900205005,"Neuruppin, Rheinsberger Tor Bhf",52.929197,12.811113
+prenzlau,Prenzlau,Mittelzentrum,53.3167,13.866575,53.3222738,13.8666984,de:12073:900340050,"Prenzlau, Bahnhof",53.321614,13.866558
+rathenow,Rathenow,Mittelzentrum,52.6063703,12.3382259,52.5997366,12.3549984,de:12063:900210771,"Rathenow, Bahnhof",52.600158,12.354772
+schwedt-oder,Schwedt (Oder),Mittelzentrum,53.0586366,14.2840858,53.0629292,14.2905039,de:12073:900341110,"Schwedt, Bahnhof",53.063044,14.290626
+seelow,Seelow,Mittelzentrum,52.5318238,14.380704,52.5381729,14.3944582,de:12064:900321741_G,"Seelow, Bahnhof",52.537774,14.394425
+spremberg,Spremberg,Mittelzentrum,51.5714513,14.3804302,51.5747888,14.3975494,de:12071:900446322,"Spremberg, Bahnhof",51.574724,14.396679
+templin,Templin,Mittelzentrum,53.1193496,13.5005559,53.1123662,13.4915853,de:12073:900340026,"Templin, Bahnhof",53.112241,13.491377
+zossen,Zossen,Mittelzentrum,52.2159073,13.4488958,52.2189728,13.4387099,de:12072:900245023,"Zossen, Bahnhof",52.218855,13.438586
+elsterwerda,Elsterwerda,Funktionsteilung,51.4617032,13.5207619,51.4600093,13.5165719,de:12062:900415502,"Elsterwerda, Bahnhof",51.459803,13.516412
+bad-liebenwerda,Bad Liebenwerda,Funktionsteilung,51.5158115,13.39272,51.5184186,13.4028276,de:12062:900415240,"Bad Liebenwerda, Bahnhof",51.518406,13.402704
+lauchhammer,Lauchhammer,Funktionsteilung,51.4977774,13.7400618,51.4745905,13.7430024,de:12066:900435203,"Lauchhammer, Bahnhof",51.474401,13.74397
+schwarzheide,Schwarzheide,Funktionsteilung,51.4862235,13.8307596,51.4786601,13.857805,de:12066:900435802,"Schwarzheide, Ost Bhf",51.473622,13.89078
+perleberg,Perleberg,Funktionsteilung,53.0762716,11.8627933,53.0713207,11.8520684,de:12070:900215696,"Perleberg, Bahnhof",53.071051,11.851784
+wittenberge,Wittenberge,Funktionsteilung,52.9983723,11.7507204,53.0021275,11.7628467,000000008401,"Wittenberge, Schillerstr.",52.998657,11.761917
+pritzwalk,Pritzwalk,Funktionsteilung,53.1492896,12.1761903,53.145725,12.1849288,de:12070:900215723,"Pritzwalk, Bahnhof",53.146317,12.183883
+wittstock-dosse,Wittstock (Dosse),Funktionsteilung,53.162999,12.4868962,53.1604863,12.4792939,de:12068:900205617,"Wittstock (Dosse), Bahnhof",53.161,12.478524
+senftenberg,Senftenberg,Funktionsteilung,51.5191742,14.0046541,51.5270113,14.0036375,de:12066:900435000,"Senftenberg, Bahnhof",51.52679,14.003977
+großräschen,Großräschen,Funktionsteilung,51.5883265,14.0123136,51.5915009,14.0149771,de:12066:900435339,"Großräschen, Bahnhof",51.591486,14.014993
+zehdenick,Zehdenick,Funktionsteilung,52.9794838,13.3348959,52.9792998,13.3174151,de:12065:900203853,"Zehdenick, Bahnhof",52.979222,13.317908
+gransee,Gransee,Funktionsteilung,53.0072783,13.1588685,53.0022995,13.1684982,de:12065:900203709,"Gransee, Bahnhof",53.002283,13.168445
+beelitz,Beelitz,Funktionsteilung,52.2363582,12.9700041,52.2402788,12.9669659,de:12069:900220938,"Beelitz, Stadt Bhf",52.239397,12.966812
+werder-havel,Werder (Havel),Funktionsteilung,52.3715809,12.9329125,52.3928748,12.9269844,de:12069:900220009,"Werder (Havel), Bahnhof",52.392786,12.926914
+bernau-bei-berlin,Bernau bei Berlin,Mittelzentrum,52.6753854,13.5919415,52.6753854,13.5919415,de:12060:900350160,S Bernau Bhf,52.675687,13.592695
+erkner,Erkner,Mittelzentrum,52.4259804,13.7542811,52.4272087,13.7524646,de:12067:900310004,S Erkner Bhf,52.428396,13.752249
+blankenfelde-mahlow,Blankenfelde-Mahlow,Mittelzentrum,52.3479238,13.4119554,52.359709300000006,13.407917381480797,de:12072:900245028::1,S Mahlow,52.360167,13.408728
+falkensee,Falkensee,Mittelzentrum,52.5678244,13.0855621,52.5597359,13.0894796,de:12063:900210010_G,"Falkensee, Bahnhof",52.559718,13.089556
+hennigsdorf,Hennigsdorf,Mittelzentrum,52.6375777,13.2057511,52.6374079,13.2060771,de:12065:900200000,S Hennigsdorf Bhf,52.637867,13.205874
+königs-wusterhausen,Königs Wusterhausen,Mittelzentrum,52.2994511,13.6244389,52.2967046,13.631528,de:12061:900260001,S Königs Wusterhausen Bhf,52.296719,13.631534
+ludwigsfelde,Ludwigsfelde,Mittelzentrum,52.3016096,13.2610163,52.2983507,13.267456,de:12072:900245029,"Ludwigsfelde, Bahnhof",52.299211,13.267601
+oranienburg,Oranienburg,Mittelzentrum,52.7529379,13.2457591,52.7539059,13.2493207,de:12065:900200005,S Oranienburg Bhf,52.754528,13.248213
+strausberg,Strausberg,Mittelzentrum,52.5814009,13.8833952,52.5322405,13.833687,de:12064:900320004,S Strausberg Bhf,52.532364,13.834793
+teltow,Teltow,Mittelzentrum,52.4016457,13.2644532,52.3882208,13.2997399,de:12069:900220001,"Teltow, Bahnhof",52.388633,13.299917
+neuenhagen-bei-berlin,Neuenhagen bei Berlin,Funktionsteilung,52.5261884,13.6889259,52.5210015,13.7002151,de:12064:900320007,S Neuenhagen (b Berlin),52.520614,13.700053
+hoppegarten,Hoppegarten,Funktionsteilung,52.550231,13.641194431680784,52.5182432,13.6742567,de:12064:900320008,S Hoppegarten,52.517831,13.673748
+schönefeld,Schönefeld,Funktionsteilung,52.388552,13.5048276,52.3910211,13.5146475,de:12061:900260935::1,"Schönefeld (bei Berlin), Dorf",52.3869,13.504541
+wildau,Wildau,Funktionsteilung,52.3194124,13.6338248,52.3194124,13.6338248,de:12061:900260002,S Wildau,52.319205,13.633587
+szczecin,Szczecin,Metropole-Auswärts,53.4301818,14.5509623,53.41932375,14.552107288336147,000005100057,Szczecin Glowny,53.418785,14.550318
+pasewalk,Pasewalk,Mittelzentrum-Auswärts,53.5053677,13.9889049,53.5150049,13.9892981,de:13075:6237_G,Pasewalk Bahnhof,53.515037,13.989293
+rostock,Rostock,Oberzentrum-Auswärts,54.0924445,12.1286127,54.0781503,12.1311246,de:13003:1489,Rostock Hauptbahnhof,54.078177,12.130724
+neustrelitz,Neustrelitz,Mittelzentrum-Auswärts,53.3617163,13.0630004,53.3592383,13.0745118,de:13071:80001_G,Neustrelitz Hauptbahnhof,53.359476,13.07435
+waren,Waren,Mittelzentrum-Auswärts,53.5217959,12.6805557,53.5217959,12.6805557,de:13071:17001_G,Waren (Müritz) Bahnhof,53.521511,12.681077
+parchim,Parchim,Mittelzentrum-Auswärts,53.4258455,11.8475244,53.430096,11.8307565,de:13076:6297,Parchim Bahnhof,53.430194,11.831773
+ludwigslust,Ludwigslust,Mittelzentrum-Auswärts,53.3300229,11.4993644,53.334718,11.4945852,de:13076:4782,Ludwigslust Bahnhof,53.334454,11.494384
+stendal,Stendal,Mittelzentrum-Auswärts,52.6050782,11.8594279,52.5946768,11.8548875,de:15090:8010334,Stendal Hbf,52.594723,11.854412
+burg-sachsen-anhalt,Burg (Sachsen-Anhalt),Mittelzentrum-Auswärts,52.2705632,11.8588198,52.2744115,11.8402498,de:15086:3889::01,"Burg (b. Magdeburg), Busbahnhof",52.274153,11.840538
+dessau,Dessau,Oberzentrum-Auswärts,51.8309956,12.2430723,51.8398819,12.2347891,de:15001:8010077,Dessau Hbf,51.839865,12.234945
+lutherstadt-wittenberg,Lutherstadt-Wittenberg,Mittelzentrum-Auswärts,51.8666527,12.646761,51.8675201,12.6620632,de:15091:8010222,Lutherstadt Wittenberg Hbf,51.867811,12.662285
+torgau,Torgau,Mittelzentrum-Auswärts,51.5581272,13.0046538,51.5628862,12.9909587,000095501191,Torgau,51.562694,12.99181
+riesa,Riesa,Mittelzentrum-Auswärts,51.3038241,13.308828,51.3095415,13.2873347,de:14627:5500,Riesa Busbf/Bahnhof,51.309397,13.288383
+großenhain,Großenhain,Mittelzentrum-Auswärts,51.2911845,13.5317153,51.2916811,13.5239417,de:14627:5021:1:Gleis1,Großenhain Cottbuser Bahnhof,51.291766,13.523993
+hoyerswerda,Hoyerswerda,Oberzentrum-Auswärts,51.4333103,14.250083,51.4329448,14.231760860925926,de:14625:8000_G,Hoyerswerda Bahnhof,51.433108,14.230976
+weißwasser-oberlausitz,Weißwasser (Oberlausitz),Mittelzentrum-Auswärts,51.5055994,14.6381786,51.5055994,14.6381786,de:14626:8281_G,Weißwasser Bahnhof,51.505586,14.638362
+slubice-polen,Slubice (Polen),Mittelzentrum-Auswärts,52.3557481,14.5662367,52.3359101,14.5924919,000000002965,"Slubice, Aleja Niepodleglosci",52.348726,14.572905
+kostrzyn-nad-odrą,Kostrzyn nad Odrą,Mittelzentrum-Auswärts,52.61626975,14.627947699728011,52.5894646,14.6466893,000000412501,"Kostrzyn (PL), Bahnhof",52.591451,14.646909
